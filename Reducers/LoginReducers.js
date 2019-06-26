@@ -8,6 +8,10 @@
       case 'HANDLE_USER_PASSWORD':
       return({...state,userPassword:action.payload})
 
+      case 'HANDLE_CLEAR_FIELD':
+     
+      return({state,id:'',userName:'',userPassword:''})
+
    
     default:
     return {...state}

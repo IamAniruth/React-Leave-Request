@@ -6,16 +6,18 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {connect} from 'react-redux';
-import {UserNameActions,UserPasswordActions,LoginAction} from '../Actions/LoginActions';
+import {UserNameActions,UserPasswordActions,LoginAction,ClearLoginFieldAction} from '../Actions/LoginActions';
 
 const mapStatesToProps=(state)=>({
-  loginInfo:state.LoginReducers
+  loginInfo:state.LoginReducers,
+  validUser:state.ValidUserReducer
 })
 
 const mapDispatchToProps=(dispatch)=>({
   handleUserName :(content)=>(dispatch(UserNameActions(content))),
   handleUserPassword :(content)=>(dispatch(UserPasswordActions(content))),
-  handleLoginAction :(content)=>(dispatch(LoginAction(content)))
+  handleLogin :(content)=>(dispatch(LoginAction(content))),
+  handleClearLoginField:()=>(dispatch(ClearLoginFieldAction())),
 })
 
 const styles = (theme)=>({
@@ -38,24 +40,74 @@ class Login extends Component {
       loginInfo:{
         userName:'',
         userPassword:''
-      }
+      },
+      validUser:{
+        loginType:'',
+        profile:{}
+  }
     }
   }
 
 static getDerivedStateFromProps(props,state){
- 
-  if(props.loginInfo !== state){
+ console.log('props',props)
+  if(props.loginInfo !== state.loginInfo || props.validUser !== state.validUser){
     let loginInfo ={
        userName:props.loginInfo.userName,
         userPassword:props.loginInfo.userPassword
     }
+     let validUser ={
+       loginType:props.validUser.loginType,
+        profile:props.validUser.profile
+    }
     return({
-      loginInfo:loginInfo
+      loginInfo:loginInfo,
+        validUser:validUser
     })
   }
+
+  //   if(props.validUser !== state.validUser){
+  //   let validUser ={
+  //      loginType:props.validUser.loginType,
+  //       profile:props.validUser.profile
+  //   }
+  //   return({
+  //     validUser:validUser
+  //   })
+  // }
 }
   componentDidUpdate(){
-   console.log("ji",this.state.loginInfo)
+   console.log("ji",this.state)
+  }
+
+  handleDashboard=()=>{
+ var promise = new Promise(function(resolve) {   
+          
+         resolve();   
+      });   
+      return promise; 
+  }
+
+  handleLogin=()=>{
+    //  this.props.handleLogin(this.state.loginInfo);
+this.handleDashboard().then(()=>{
+  this.props.handleLogin(this.state.loginInfo);
+  this.handleDashboard().then(()=>{
+  this.props.handleClearLoginField();
+   this.handleDashboard().then(()=>{
+  this.handleDashboardType();
+  
+})
+})
+})
+  }
+
+  handleDashboardType=()=>{
+    if(this.state.validUser.loginType ==='Admin'){
+      this.props.history.push('/AdminDashboard')
+    }
+    else if(this.state.validUser.loginType ==='User'){
+       this.props.history.push('/UserDashboard')
+    }
   }
 
   render() {
@@ -88,7 +140,8 @@ static getDerivedStateFromProps(props,state){
       </CardContent>
       <CardActions>
         <Button variant="contained" onClick={()=>{
-          this.props.handleLoginAction(this.state.loginInfo)
+          this.handleLogin()
+          // this.props.handleLogin(this.state.loginInfo)
         }}>Login</Button>
       </CardActions>
     </Card>

@@ -10,6 +10,10 @@ export const UserPasswordActions =(content)=>({
   payload:content
 })
 
+export const ClearLoginFieldAction=()=>({
+  type:'HANDLE_CLEAR_FIELD'
+})
+
 export const LoginAction =(content)=>{
   console.log(adminInfo,userInfo)
   console.log(content)

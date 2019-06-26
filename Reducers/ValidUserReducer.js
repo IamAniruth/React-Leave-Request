@@ -5,7 +5,8 @@
    let  loginType =action.loginType;
    let profile = action.profile
      console.log('ValidUser',action)
-      return {...state,loginType:loginType,profile:profile}
+      return {...state,loginType:action.payload.loginType,profile:action.payload.profile}
+   
     default:
     return {...state}
   }
