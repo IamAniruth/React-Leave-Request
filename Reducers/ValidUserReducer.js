@@ -6,6 +6,9 @@
    let profile = action.profile
      console.log('ValidUser',action)
       return {...state,loginType:action.payload.loginType,profile:action.payload.profile}
+
+      case 'HANDLE_CLEAR_HISTORY_LOGIN':
+          return {...state,loginType:'',profile:{}}
    
    case 'GET_LOGIN_INFO':
        return {...state}

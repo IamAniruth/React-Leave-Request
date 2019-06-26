@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {connect} from 'react-redux';
-import {UserNameActions,UserPasswordActions,LoginAction,ClearLoginFieldAction} from '../Actions/LoginActions';
+import {UserNameActions,UserPasswordActions,LoginAction,ClearLoginFieldAction,ClearHistoryLoginAction} from '../Actions/LoginActions';
 
 const mapStatesToProps=(state)=>({
   loginInfo:state.LoginReducers,
@@ -18,6 +18,7 @@ const mapDispatchToProps=(dispatch)=>({
   handleUserPassword :(content)=>(dispatch(UserPasswordActions(content))),
   handleLogin :(content)=>(dispatch(LoginAction(content))),
   handleClearLoginField:()=>(dispatch(ClearLoginFieldAction())),
+   handleClearHistoryLogin:()=>(dispatch(ClearHistoryLoginAction())),
 })
 
 const styles = (theme)=>({
@@ -34,8 +35,9 @@ const styles = (theme)=>({
 });
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+      props.handleClearHistoryLogin();
     this.state={
       loginInfo:{
         userName:'',
