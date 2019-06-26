@@ -1,5 +1,10 @@
-export const LoginActions =(content)=>({
+export const UserNameActions =(content)=>({
   type:'HANDLE_USER_NAME',
+  payload:content
+})
+
+export const UserPasswordActions =(content)=>({
+  type:'HANDLE_USER_PASSWORD',
   payload:content
 })
 

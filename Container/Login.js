@@ -6,14 +6,15 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {connect} from 'react-redux';
-import {LoginActions} from '../Actions/LoginActions';
+import {UserNameActions,UserPasswordActions} from '../Actions/LoginActions';
 
 const mapStatesToProps=(state)=>({
   loginInfo:state.LoginReducers
 })
 
 const mapDispatchToProps=(dispatch)=>({
-  handleLogin :(content)=>(dispatch(LoginActions(content)))
+  handleUserName :(content)=>(dispatch(UserNameActions(content))),
+   handleUserPassword :(content)=>(dispatch(UserPasswordActions(content)))
 })
 
 const styles = (theme)=>({
@@ -32,10 +33,28 @@ const styles = (theme)=>({
 class Login extends Component {
   constructor() {
     super();
+    this.state={
+      loginInfo:{
+        userName:'',
+        userPassword:''
+      }
+    }
   }
 
-  componentDidMount(){
-    this.props.handleLogin('jk ')
+static getDerivedStateFromProps(props,state){
+  console.log("ll",props.loginInfo)
+  if(props.loginInfo !== state){
+    let loginInfo ={
+       userName:props.loginInfo.userName,
+        userPassword:props.loginInfo.userPassword
+    }
+    return({
+      loginInfo:loginInfo
+    })
+  }
+}
+  componentDidUpdate(){
+   console.log("ji",this.state.loginInfo)
   }
 
   render() {
@@ -48,16 +67,20 @@ class Login extends Component {
         <TextField
         label="User Name"
         className={classes.textField}
-        // value={values.name}
-        // onChange={handleChange('name')}
+        value={this.state.loginInfo.userName}
+        onChange={(event)=>{
+          this.props.handleUserName(event.target.value)
+        }}
         margin="normal"
         variant="outlined"
       />
          <TextField
         label="Password"
         className={classes.textField}
-        // value={values.name}
-        // onChange={handleChange('name')}
+       value={this.state.loginInfo.userPassword}
+        onChange={(event)=>{
+          this.props.handleUserPassword(event.target.value)
+        }}
         margin="normal"
         variant="outlined"
       />
