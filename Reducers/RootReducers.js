@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import {LoginReducers} from './LoginReducers';
 import {ValidUserReducer} from './ValidUserReducer';
-import {DateSelectReducer} from './DateSelectReducer';
+import {LeaveReducers} from './LeaveReducers';
 
 
  export const RootReducers= combineReducers({
   LoginReducers,
   ValidUserReducer,
-  DateSelectReducer
+ LeaveReducers
 })
  

@@ -11,16 +11,16 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import {HandleDateSelectAction} from '../../Actions/LeaveActions'
+import {HandleLeaveAction} from '../../Actions/LeaveActions'
 
 const mapStatesToProps=(state)=>({
   loginInfo:state.ValidUserReducer,
-  selectedDate:state.DateSelectReducer
+  selectedDate:state.LeaveReducers
 })
 
 const mapDispatchToProps=(dispatch)=>({
   handleLoginInfo:()=>(dispatch(GetLoginInfoActions())),
-  handleDateSelect:(content)=>(dispatch(HandleDateSelectAction(content))),
+  handleLeave:(content1,content2)=>(dispatch(HandleLeaveAction(content1,content2))),
 })
 
 const styles = (theme)=>({
@@ -50,8 +50,8 @@ class UserDashboard extends Component {
   }
 
   static getDerivedStateFromProps(props,state){
-
-  if(props.loginInfo !== state.loginInfo ){
+    console.log("kiuhjdvfs",props)
+  if(props.loginInfo !== state.loginInfo || props.selectedDate !== state.selectedDate ){
   
      let loginInfo ={
        loginType:props.loginInfo.loginType,
@@ -59,11 +59,7 @@ class UserDashboard extends Component {
     }
     return({
       loginInfo:loginInfo,
-    })
-  }
-  if(props.selectedDate !== state.selectedDate){
-    return({
-      selectedDate:props.selectedDate
+        selectedDate:props.selectedDate.date
     })
   }
   }
@@ -75,6 +71,7 @@ componentDidMount(){
 
   render() {
     const classes = this.props
+    console.log("this.state.selectedDate",this.state.selectedDate)
     return (
       <div>
       {this.state.loginInfo.loginType===''?(<div>
@@ -111,15 +108,21 @@ componentDidMount(){
           margin="normal"
           id="mui-pickers-date"
           label="Date picker"
-          value={this.state.date}
+          value={this.state.selectedDate ==='' ? new Date() : this.state.selectedDate}
           onChange={(date)=>{
-            this.props.handleDateSelect(date)
+            this.props.handleLeave(date,this.state.loginInfo.profile)
           }}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
         />
+       
         </MuiPickersUtilsProvider>
+          </div>
+          <div>
+         
+           
+         
           </div>
           </Paper>
         </Grid>
