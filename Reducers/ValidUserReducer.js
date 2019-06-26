@@ -7,6 +7,8 @@
      console.log('ValidUser',action)
       return {...state,loginType:action.payload.loginType,profile:action.payload.profile}
    
+   case 'GET_LOGIN_INFO':
+       return {...state}
     default:
     return {...state}
   }
