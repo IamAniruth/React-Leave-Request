@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import './style.css';
-import Routers from './Router/Routers'
+import Routers from './Router/Routers';
+import {Provider} from 'react-redux';
+import {store} from './Store/Store'
 
 class App extends Component {
   constructor() {
@@ -10,12 +12,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-       
-        <p>
+      <Provider store={store}>
          <Routers />
-        </p>
-      </div>
+      </Provider>
+       
     );
   }
 }
