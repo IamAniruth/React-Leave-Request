@@ -4,5 +4,5 @@
 // })
 export const HandleLeaveAction =(content1,content2)=>({
   type:'HANDLE_LEAVE',
-  payload:{content,content2}
+  payload:{content1,content2}
 })

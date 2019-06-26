@@ -1,9 +1,21 @@
- export const LoginReducers =(state=defaultValues(),action)=>{
-   console.log(action)
+import moment from 'moment';
+
+ export const LeaveReducers =(state=defaultValues(),action)=>{
+   console.log('HANDLE_LEAVE',action)
   switch(action.type){
     case 'HANDLE_LEAVE':
+    let requestList ={
+      id:1,
+      type:'Request sended',
+      leaveDate:moment(action.payload.content1).format('DD-MM-YYYY'),
+      userInfo:action.payload.content2
+    }
+    let leave=state.leave;
+    
+      leave.push(requestList)
+    
 
-      return({...state,userName:action.payload})
+      return({...state,leave:leave})
 
       
      
@@ -15,7 +27,7 @@
 
 function defaultValues(){
   return {
-    Leave:[]
+    leave:[]
   }
 }
 

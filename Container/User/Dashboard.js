@@ -15,7 +15,7 @@ import {HandleLeaveAction} from '../../Actions/LeaveActions'
 
 const mapStatesToProps=(state)=>({
   loginInfo:state.ValidUserReducer,
-  selectedDate:state.LeaveReducers
+  leaveList:state.LeaveReducers
 })
 
 const mapDispatchToProps=(dispatch)=>({
@@ -45,21 +45,22 @@ class UserDashboard extends Component {
         loginType:'',
         profile:{}
       },
-      selectedDate:''
+      date:new Date(),
+      leaveList:[]
     }
   }
 
   static getDerivedStateFromProps(props,state){
     console.log("kiuhjdvfs",props)
-  if(props.loginInfo !== state.loginInfo || props.selectedDate !== state.selectedDate ){
+  if(props.loginInfo !== state.loginInfo || props.leaveList !== state.leaveList ){
   
      let loginInfo ={
        loginType:props.loginInfo.loginType,
-        profile:props.loginInfo.profile
+       profile:props.loginInfo.profile
     }
     return({
       loginInfo:loginInfo,
-        selectedDate:props.selectedDate.date
+      leaveList:props.leaveList.leave
     })
   }
   }
@@ -68,10 +69,46 @@ componentDidMount(){
   console.log("jkkk",this.state)
 }
 
+leaveList=()=>{
+  // return <div>r</div>
+  let value =''
+  console.log('this.state.leaveList',this.state.leaveList)
+  if(this.state.leaveList.length>0){
+ value=this.state.leaveList.map((item,i)=>{
+            if(item.userInfo.id ===this.state.loginInfo.profile.id ){
+              console.log("jhksfd",item.leaveDate)
+              // (<div>df</div>)
+   return (
+     
+                <div>
+             <span>
+              <span>
+               {item.leaveDate} 
+              </span>
+             <span>
+             <b>
+             {item.type}
+             </b>
+             </span>
+             </span>
+              </div>)
+            }
+          })
+  }else{
+value =  (
+                <div>
+                There are no Request
+                </div>
+              )
+  }
+
+
+        return value
+}
 
   render() {
     const classes = this.props
-    console.log("this.state.selectedDate",this.state.selectedDate)
+   
     return (
       <div>
       {this.state.loginInfo.loginType===''?(<div>
@@ -93,7 +130,25 @@ componentDidMount(){
           My Leaves
           </div>
           <div>
-          Table
+          {this.leaveList()}
+        {
+          // this.state.leaveList.find((item,i)=>{
+          //   if(item.userInfo.id ===this.state.loginInfo.profile.id ){
+          //     console.log("jhksfd",this.state.loginInfo.profile.id)
+          //     (<div>df</div>)
+          //     // return(
+          //     //   <div>
+          //     //   ok
+          //     // </div>)
+          //   }else{
+          //     return(
+          //       <div>
+          //       There are no Request
+          //       </div>
+          //     )
+          //   }
+          // })
+        }
           </div>
           </Paper>
         </Grid>
@@ -108,9 +163,13 @@ componentDidMount(){
           margin="normal"
           id="mui-pickers-date"
           label="Date picker"
-          value={this.state.selectedDate ==='' ? new Date() : this.state.selectedDate}
+          value={this.state.date }
           onChange={(date)=>{
-            this.props.handleLeave(date,this.state.loginInfo.profile)
+            this.setState({date:date},()=>{
+              console.log('this.state.loginInfo',this.state.loginInfo)
+  this.props.handleLeave(date,this.state.loginInfo.profile)
+            })
+            
           }}
           KeyboardButtonProps={{
             'aria-label': 'change date',
