@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {connect} from 'react-redux';
-import {UserNameActions,UserPasswordActions} from '../Actions/LoginActions';
+import {UserNameActions,UserPasswordActions,LoginAction} from '../Actions/LoginActions';
 
 const mapStatesToProps=(state)=>({
   loginInfo:state.LoginReducers
@@ -14,7 +14,8 @@ const mapStatesToProps=(state)=>({
 
 const mapDispatchToProps=(dispatch)=>({
   handleUserName :(content)=>(dispatch(UserNameActions(content))),
-   handleUserPassword :(content)=>(dispatch(UserPasswordActions(content)))
+  handleUserPassword :(content)=>(dispatch(UserPasswordActions(content))),
+  handleLoginAction :(content)=>(dispatch(LoginAction(content)))
 })
 
 const styles = (theme)=>({
@@ -42,7 +43,7 @@ class Login extends Component {
   }
 
 static getDerivedStateFromProps(props,state){
-  console.log("ll",props.loginInfo)
+ 
   if(props.loginInfo !== state){
     let loginInfo ={
        userName:props.loginInfo.userName,
@@ -86,7 +87,9 @@ static getDerivedStateFromProps(props,state){
       />
       </CardContent>
       <CardActions>
-        <Button variant="contained">Login</Button>
+        <Button variant="contained" onClick={()=>{
+          this.props.handleLoginAction(this.state.loginInfo)
+        }}>Login</Button>
       </CardActions>
     </Card>
         </p>

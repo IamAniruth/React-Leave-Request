@@ -7,6 +7,8 @@
 
       case 'HANDLE_USER_PASSWORD':
       return({...state,userPassword:action.payload})
+
+   
     default:
     return {...state}
   }
@@ -14,6 +16,7 @@
 
 function defaultValues(){
   return {
+    id:'',
     userName:'',
     userPassword:''
   }
