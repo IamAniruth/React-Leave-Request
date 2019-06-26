@@ -7,7 +7,8 @@ export const adminInfo={
 export const userInfo=[{
   id:'USR1',
   userName :'User1',
-  userPassword :'User1@123'
+  userPassword :'User1@123',
+  LoginTime:new Date()
   },
   {
   id:'USR2',

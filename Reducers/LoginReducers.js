@@ -1,5 +1,5 @@
  export const LoginReducers =(state=defaultValues(),action)=>{
-   console.log(action)
+  
   switch(action.type){
     case 'HANDLE_USER_NAME':
     console.log(action)

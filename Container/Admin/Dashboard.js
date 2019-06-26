@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import {GetLoginInfoActions} from '../../Actions/AdminDashboardActions';
+import {GetLoginInfoActions} from '../../Actions/DashboardActions';
 import Button from '@material-ui/core/Button';
 
 const mapStatesToProps=(state)=>({
@@ -59,6 +59,9 @@ class AdminDashboard extends Component {
         }}>Click here</Button>
       </div>):(
         <div>
+          <Button variant="contained" onClick={()=>{
+          this.props.history.push('/')
+        }}>Logout</Button>
          Admin Dashboard
         </div>
       )}
