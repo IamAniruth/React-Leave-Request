@@ -6,3 +6,8 @@ export const HandleLeaveAction =(content1,content2)=>({
   type:'HANDLE_LEAVE',
   payload:{content1,content2}
 })
+
+export const GetLeaveListAction =()=>({
+  type:'GET_LEAVE_LIST',
+})
+

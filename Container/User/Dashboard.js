@@ -11,7 +11,7 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import {HandleLeaveAction} from '../../Actions/LeaveActions'
+import {HandleLeaveAction} from '../../Actions/LeaveActions';
 
 const mapStatesToProps=(state)=>({
   loginInfo:state.ValidUserReducer,

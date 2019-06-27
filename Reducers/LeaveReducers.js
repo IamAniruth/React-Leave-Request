@@ -11,12 +11,12 @@ import moment from 'moment';
       userInfo:action.payload.content2
     }
     let leave=state.leave;
-    
-      leave.push(requestList)
-    
-
+      leave.push(requestList);
+      localStorage.setItem('LeaveList',JSON.stringify({...state,leave:leave}))
+      console.log('localstorage',localStorage.getItem('LeaveList'))
       return({...state,leave:leave})
-
+    case 'GET_LEAVE_LIST':
+      return(localStorage.getItem('LeaveList') !==undefined ? JSON.parse( localStorage.getItem('LeaveList')):[])
       
      
    
