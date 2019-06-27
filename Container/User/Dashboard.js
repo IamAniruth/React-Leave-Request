@@ -46,7 +46,9 @@ class UserDashboard extends Component {
         profile:{}
       },
       date:new Date(),
-      leaveList:[]
+      leaveList:{
+        leave:[]
+      }
     }
   }
 
@@ -60,7 +62,7 @@ class UserDashboard extends Component {
     }
     return({
       loginInfo:loginInfo,
-      leaveList:props.leaveList.leave
+      leaveList:props.leaveList
     })
   }
   }
@@ -73,8 +75,8 @@ leaveList=()=>{
   // return <div>r</div>
   let value =''
   console.log('this.state.leaveList',this.state.leaveList)
-  if(this.state.leaveList.length>0){
- value=this.state.leaveList.map((item,i)=>{
+  if(this.state.leaveList.leave.length>0){
+ value=this.state.leaveList.leave.map((item,i)=>{
             if(item.userInfo.id ===this.state.loginInfo.profile.id ){
               console.log("jhksfd",item.leaveDate)
               // (<div>df</div>)

@@ -5,7 +5,7 @@ import {GetLoginInfoActions} from '../../Actions/DashboardActions';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import {GetLeaveListAction} from '../../Actions/LeaveActions';
+import {GetLeaveListAction,AcceptLeaveAction,DeniedLeaveAction} from '../../Actions/LeaveActions';
 
 const mapStatesToProps=(state)=>({
   loginInfo:state.ValidUserReducer,
@@ -16,6 +16,8 @@ const mapStatesToProps=(state)=>({
 const mapDispatchToProps=(dispatch)=>({
   handleLoginInfo:()=>(dispatch(GetLoginInfoActions())),
   getLeaveList:()=>(dispatch(GetLeaveListAction())),
+  acceptLeave:(content)=>(dispatch(AcceptLeaveAction(content))),
+  deniedLeave:(content)=>(dispatch(DeniedLeaveAction(content))),
 })
 
 const styles = (theme)=>({
@@ -33,22 +35,40 @@ class AdminDashboard extends Component {
         loginType:'',
         profile:{},
       },
-      leaveList:[]
+      leaveList:{
+        leave:[]
+      },
+      pendingCount:0,
+      aprovedCount:0,
     }
   }
 
   static getDerivedStateFromProps(props,state){
-
-  if(props.loginInfo !== state.loginInfo){
+ console.log("Admin1",props)
+ let pendingCount=0;
+ let aprovedCount = 0;
+  if(props.loginInfo !== state.loginInfo || props.leaveList !==state.leaveList){
   
+  for(let i=0;i<props.leaveList.leave.length;i++){
+    if(props.leaveList.leave[i].type ==='Request sended' ){
+      pendingCount +=1;
+    }
+     if(props.leaveList.leave[i].type ==='Leave Aproved' ){
+      aprovedCount +=1;
+    }
+  }
+
      let loginInfo ={
        loginType:props.loginInfo.loginType,
         profile:props.loginInfo.profile,
        
     }
+     console.log("Admin2",props)
     return({
       loginInfo:loginInfo,
-     leaveList:props.leaveList.leave
+     leaveList:props.leaveList,
+     pendingCount:pendingCount,
+     aprovedCount:aprovedCount
     })
   }
   }
@@ -60,11 +80,12 @@ class AdminDashboard extends Component {
   leaveList=()=>{
   // return <div>r</div>
   let value =''
-  console.log('this.state.leaveList',this.state.leaveList)
-  if(this.state.leaveList.length>0){
- value=this.state.leaveList.map((item,i)=>{
+  console.log('this.state.leaveList',this.state.leaveList.leave)
+  if(this.state.leaveList.leave.length>0){
+ value=this.state.leaveList.leave.map((item,i)=>{
           
               // (<div>df</div>)
+              if(item.type ==='Request sended'){
    return (
      
                 <div>
@@ -74,10 +95,22 @@ class AdminDashboard extends Component {
              {item.userInfo.userName+' '+item.leaveDate+' '+item.type}
              </b>
              </span>
+             <span>
+
+             </span>
              
-            
+            <Button variant="contained" onClick={()=>{
+              this.props.acceptLeave(item)
+        }}> Leave Accept</Button>
+
+        <Button variant="contained" onClick={()=>{
+         this.props.deniedLeave(item)
+        }}> Leave Denied</Button>
+
              </span>
               </div>)
+              }
+
            
           })
   }else{
@@ -92,6 +125,45 @@ value =  (
         return value
 }
 
+
+responseRequest=()=>{
+   let value =''
+  console.log('this.state.leaveList',this.state.leaveList.leave)
+  if(this.state.leaveList.leave.length>0){
+ value=this.state.leaveList.leave.map((item,i)=>{
+          
+              // (<div>df</div>)
+              if(item.type ==='Leave Denied' || item.type ==='Leave Aproved'){
+   return (
+     
+                <div>
+             <span>
+             <span>
+             <b>
+             {item.userInfo.userName+' '+item.leaveDate+' '+item.type}
+             </b>
+             </span>
+             <span>
+
+             </span>
+
+             </span>
+              </div>)
+              }
+
+           
+          })
+  }else{
+value =  (
+                <div>
+                There are no Request
+                </div>
+              )
+  }
+
+
+        return value
+}
   render() {
     const classes= this.props
     return (
@@ -111,7 +183,7 @@ value =  (
        <Grid item xs={6}>
           <Paper className={classes.paper}>
          <div>
-          Leave Request List
+        Pending Request List({this.state.pendingCount})
           </div>
           <div>
            {this.leaveList()}
@@ -121,7 +193,10 @@ value =  (
          <Grid item xs={6}>
           <Paper className={classes.paper}>
          <div>
-          Leave Aproved List
+          Leave Aproved List({this.state.aprovedCount})
+          <div>
+          {this.responseRequest()}
+          </div>
           </div>
           </Paper>
         </Grid>

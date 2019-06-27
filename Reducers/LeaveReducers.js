@@ -5,7 +5,7 @@ import moment from 'moment';
   switch(action.type){
     case 'HANDLE_LEAVE':
     let requestList ={
-      id:1,
+      id:JSON.parse( localStorage.getItem('LeaveList'))  ==null ||undefined  ? 1:JSON.parse( localStorage.getItem('LeaveList')).leave.length +1,
       type:'Request sended',
       leaveDate:moment(action.payload.content1).format('DD-MM-YYYY'),
       userInfo:action.payload.content2
@@ -13,12 +13,47 @@ import moment from 'moment';
     let leave=state.leave;
       leave.push(requestList);
       localStorage.setItem('LeaveList',JSON.stringify({...state,leave:leave}))
-      console.log('localstorage',localStorage.getItem('LeaveList'))
+     
       return({...state,leave:leave})
     case 'GET_LEAVE_LIST':
-      return(localStorage.getItem('LeaveList') !==undefined ? JSON.parse( localStorage.getItem('LeaveList')):[])
+ console.log('localstorage',localStorage.getItem('LeaveList'))
+      return(localStorage.getItem('LeaveList') !==null ||undefined  ? JSON.parse( localStorage.getItem('LeaveList')):{leave:[]})
       
-     
+    case 'ACCEPT_LEAVE':
+    let acceptLeaveInfo = action.payload;
+    let leaveList = JSON.parse( localStorage.getItem('LeaveList')).leave
+    console.log('acceptLeaveInfo',acceptLeaveInfo)
+     console.log('leaveList',leaveList)
+    for(let i = 0;i<leaveList.length;i++){
+      if(leaveList[i].userInfo.id ===acceptLeaveInfo.userInfo.id && acceptLeaveInfo.id ===  leaveList[i].id){
+        console.log("okkk")
+        leaveList[i].type='Leave Aproved';
+       
+      }
+       leaveList= leaveList;
+       let updateLeave = {...state,leave:leaveList}
+        localStorage.setItem('LeaveList',JSON.stringify(updateLeave))
+    }
+
+    return ({...state,leave:leaveList})
+
+case 'DENIED_LEAVE':
+
+      let acceptLeaveInfo = action.payload;
+    let leaveList = JSON.parse( localStorage.getItem('LeaveList')).leave
+   
+    for(let i = 0;i<leaveList.length;i++){
+      if(leaveList[i].userInfo.id ===acceptLeaveInfo.userInfo.id && acceptLeaveInfo.id ===  leaveList[i].id){
+        console.log("okkk")
+        leaveList[i].type='Leave Denied';
+       
+      }
+       leaveList= leaveList;
+       let updateLeave = {...state,leave:leaveList}
+        localStorage.setItem('LeaveList',JSON.stringify(updateLeave))
+    }
+
+    return ({...state,leave:leaveList})
    
     default:
     return {...state}
