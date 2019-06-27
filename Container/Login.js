@@ -43,6 +43,7 @@ class Login extends Component {
         userName:'',
         userPassword:''
       },
+      loginErr:'',
       validUser:{
         loginType:'',
         profile:{}
@@ -105,10 +106,24 @@ this.handleDashboard().then(()=>{
 
   handleDashboardType=()=>{
     if(this.state.validUser.loginType ==='Admin'){
-      this.props.history.push('/AdminDashboard')
+       this.setState({
+        loginErr:''
+      },()=>{
+         this.props.history.push('/AdminDashboard')
+      })
+     
     }
     else if(this.state.validUser.loginType ==='User'){
-       this.props.history.push('/UserDashboard')
+       this.setState({
+        loginErr:''
+      },()=>{
+    this.props.history.push('/UserDashboard')
+      })
+       
+    }else if(this.state.validUser.loginType ==='InvalidData'){
+      this.setState({
+        loginErr:'Invalid UserName or Password'
+      })
     }
   }
 
@@ -124,27 +139,49 @@ this.handleDashboard().then(()=>{
         className={classes.textField}
         value={this.state.loginInfo.userName}
         onChange={(event)=>{
-          this.props.handleUserName(event.target.value)
+           let value=event.target.value
+          this.setState({
+            loginErr:''
+          },()=>{
+          this.props.handleUserName(value)
+          })
+         
         }}
         margin="normal"
         variant="outlined"
       />
          <TextField
         label="Password"
+        type='password'
         className={classes.textField}
        value={this.state.loginInfo.userPassword}
         onChange={(event)=>{
-          this.props.handleUserPassword(event.target.value)
+          let value=event.target.value
+           this.setState({
+            loginErr:''
+          },()=>{
+          this.props.handleUserPassword(value)
+          })
+
+         
         }}
         margin="normal"
         variant="outlined"
       />
       </CardContent>
       <CardActions>
-        <Button variant="contained" onClick={()=>{
-          this.handleLogin()
+      <div>
+      <div style={{color:'red'}}>
+      {this.state.loginErr}
+      </div>
+      <div>
+      <Button variant="contained" onClick={()=>{
+                this.handleLogin()
           // this.props.handleLogin(this.state.loginInfo)
         }}>Login</Button>
+      </div>
+      </div>
+       
       </CardActions>
     </Card>
         </p>

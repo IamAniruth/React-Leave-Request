@@ -4,24 +4,44 @@ import moment from 'moment';
    console.log('HANDLE_LEAVE',action)
   switch(action.type){
     case 'HANDLE_LEAVE':
-    let requestList ={
+   
+
+     let leaveList = localStorage.getItem('LeaveList')==null ||undefined  ? {leave:[]}: JSON.parse( localStorage.getItem('LeaveList')).leave
+
+    //  for(let i=0;i<leaveList.length;i++){
+        // console.log('action.payload.content2.id ===leaveList[i].userInfo.id',action.payload.content2.id ,leaveList[i].userInfo.id)
+      //  if((action.payload.content2.id ===leaveList[i].userInfo.id) ){
+         
+    
+         
+     
+
+      
+            let requestList ={
       id:JSON.parse( localStorage.getItem('LeaveList'))  ==null ||undefined  ? 1:JSON.parse( localStorage.getItem('LeaveList')).leave.length +1,
       type:'Request sended',
+      loginTime:moment(action.payload.content3).format('MMMM Do YYYY, h:mm:ss a'),
       leaveDate:moment(action.payload.content1).format('DD-MM-YYYY'),
       userInfo:action.payload.content2
     }
     let leave=state.leave;
+    console.log('leave',leave)
       leave.push(requestList);
       localStorage.setItem('LeaveList',JSON.stringify({...state,leave:leave}))
      
       return({...state,leave:leave})
-    case 'GET_LEAVE_LIST':
- console.log('localstorage',localStorage.getItem('LeaveList'))
-      return(localStorage.getItem('LeaveList') !==null ||undefined  ? JSON.parse( localStorage.getItem('LeaveList')):{leave:[]})
+        //  }
+        
+    //  }
+    
+      // return({...state})
+        
+        
+   
       
     case 'ACCEPT_LEAVE':
     let acceptLeaveInfo = action.payload;
-    let leaveList = JSON.parse( localStorage.getItem('LeaveList')).leave
+     let leaveList = localStorage.getItem('LeaveList')==null ||undefined  ? {leave:[]}: JSON.parse( localStorage.getItem('LeaveList')).leave
     console.log('acceptLeaveInfo',acceptLeaveInfo)
      console.log('leaveList',leaveList)
     for(let i = 0;i<leaveList.length;i++){
@@ -62,7 +82,7 @@ case 'DENIED_LEAVE':
 
 function defaultValues(){
   return {
-    leave:[]
+    leave:localStorage.getItem('LeaveList')==null ||undefined  ? []:JSON.parse( localStorage.getItem('LeaveList')).leave
   }
 }
 

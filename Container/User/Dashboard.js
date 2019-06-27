@@ -20,7 +20,7 @@ const mapStatesToProps=(state)=>({
 
 const mapDispatchToProps=(dispatch)=>({
   handleLoginInfo:()=>(dispatch(GetLoginInfoActions())),
-  handleLeave:(content1,content2)=>(dispatch(HandleLeaveAction(content1,content2))),
+  handleLeave:(content1,content2,content3)=>(dispatch(HandleLeaveAction(content1,content2,content3))),
 })
 
 const styles = (theme)=>({
@@ -43,12 +43,15 @@ class UserDashboard extends Component {
     this.state={
         loginInfo:{
         loginType:'',
+       
         profile:{}
       },
+      loginTime:new Date(),
       date:new Date(),
       leaveList:{
         leave:[]
       }
+      
     }
   }
 
@@ -129,7 +132,7 @@ value =  (
        <Grid item xs={6}>
           <Paper className={classes.paper}>
          <div>
-          My Leaves
+          My Leaves UserName:<b>{this.state.loginInfo.profile.userName}</b>
           </div>
           <div>
           {this.leaveList()}
@@ -157,19 +160,20 @@ value =  (
         <Grid item xs={6}>
           <Paper className={classes.paper}>
           <div>
-          New Leave
+          New Leave 
           </div>
           <div>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
           margin="normal"
+          minDate={new Date()}
           id="mui-pickers-date"
           label="Date picker"
           value={this.state.date }
           onChange={(date)=>{
             this.setState({date:date},()=>{
               console.log('this.state.loginInfo',this.state.loginInfo)
-  this.props.handleLeave(date,this.state.loginInfo.profile)
+  this.props.handleLeave(date,this.state.loginInfo.profile,this.state.loginTime)
             })
             
           }}

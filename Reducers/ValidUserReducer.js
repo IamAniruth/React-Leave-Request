@@ -1,3 +1,5 @@
+ import moment from 'moment';
+
  export const ValidUserReducer =(state=defaultValues(),action)=>{
  
   switch(action.type){
@@ -20,6 +22,7 @@
 function defaultValues(){
   return {
    loginType:'',
+   loginTime:moment(new Date()).format('MMMM Do YYYY, h:mm:ss a'),
    profile:{}
   }
 }

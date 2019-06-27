@@ -96,7 +96,7 @@ class AdminDashboard extends Component {
              </b>
              </span>
              <span>
-
+            {item.loginTime}
              </span>
              
             <Button variant="contained" onClick={()=>{
@@ -140,13 +140,10 @@ responseRequest=()=>{
              <span>
              <span>
              <b>
-             {item.userInfo.userName+' '+item.leaveDate+' '+item.type}
+             {item.userInfo.userName+' '+item.leaveDate+' '+item.type+' '+item.loginTime}
              </b>
              </span>
-             <span>
-
-             </span>
-
+            
              </span>
               </div>)
               }
@@ -184,6 +181,7 @@ value =  (
           <Paper className={classes.paper}>
          <div>
         Pending Request List({this.state.pendingCount})
+        UserName:<b>{this.state.loginInfo.profile.userName}</b>
           </div>
           <div>
            {this.leaveList()}

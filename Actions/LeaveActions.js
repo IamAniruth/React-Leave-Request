@@ -2,9 +2,9 @@
 //   type:'HANDLE_DATE_SELECT',
 //   payload:content
 // })
-export const HandleLeaveAction =(content1,content2)=>({
+export const HandleLeaveAction =(content1,content2,content3)=>({
   type:'HANDLE_LEAVE',
-  payload:{content1,content2}
+  payload:{content1,content2,content3}
 })
 
 export const GetLeaveListAction =()=>({
