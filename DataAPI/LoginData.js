@@ -3,7 +3,6 @@ export const adminInfo={
   id:'ADMN',
   userName :'Admin',
   userPassword :'Admin@123',
-  loginTime:moment(new Date()).format('MMMM Do YYYY, h:mm:ss a'),
 }
 
 export const userInfo=[{

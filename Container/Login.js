@@ -52,7 +52,6 @@ class Login extends Component {
   }
 
 static getDerivedStateFromProps(props,state){
- console.log('props',props)
   if(props.loginInfo !== state.loginInfo || props.validUser !== state.validUser){
     let loginInfo ={
        userName:props.loginInfo.userName,
@@ -67,31 +66,17 @@ static getDerivedStateFromProps(props,state){
         validUser:validUser
     })
   }
-
-  //   if(props.validUser !== state.validUser){
-  //   let validUser ={
-  //      loginType:props.validUser.loginType,
-  //       profile:props.validUser.profile
-  //   }
-  //   return({
-  //     validUser:validUser
-  //   })
-  // }
 }
-  componentDidUpdate(){
-   console.log("ji",this.state)
-  }
+
 
   handleDashboard=()=>{
- var promise = new Promise(function(resolve) {   
-          
-         resolve();   
-      });   
-      return promise; 
-  }
+    var promise = new Promise(function(resolve) {   
+            resolve();   
+          });   
+          return promise; 
+      }
 
   handleLogin=()=>{
-    //  this.props.handleLogin(this.state.loginInfo);
 this.handleDashboard().then(()=>{
   this.props.handleLogin(this.state.loginInfo);
   this.handleDashboard().then(()=>{
@@ -99,9 +84,9 @@ this.handleDashboard().then(()=>{
    this.handleDashboard().then(()=>{
   this.handleDashboardType();
   
-})
-})
-})
+  })
+  })
+  })
   }
 
   handleDashboardType=()=>{
@@ -162,8 +147,6 @@ this.handleDashboard().then(()=>{
           },()=>{
           this.props.handleUserPassword(value)
           })
-
-         
         }}
         margin="normal"
         variant="outlined"
@@ -177,11 +160,9 @@ this.handleDashboard().then(()=>{
       <div>
       <Button variant="contained" onClick={()=>{
                 this.handleLogin()
-          // this.props.handleLogin(this.state.loginInfo)
         }}>Login</Button>
       </div>
       </div>
-       
       </CardActions>
     </Card>
         </p>

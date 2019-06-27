@@ -44,11 +44,9 @@ class AdminDashboard extends Component {
   }
 
   static getDerivedStateFromProps(props,state){
- console.log("Admin1",props)
  let pendingCount=0;
  let aprovedCount = 0;
   if(props.loginInfo !== state.loginInfo || props.leaveList !==state.leaveList){
-  
   for(let i=0;i<props.leaveList.leave.length;i++){
     if(props.leaveList.leave[i].type ==='Request sended' ){
       pendingCount +=1;
@@ -57,109 +55,83 @@ class AdminDashboard extends Component {
       aprovedCount +=1;
     }
   }
-
      let loginInfo ={
        loginType:props.loginInfo.loginType,
         profile:props.loginInfo.profile,
        
     }
-     console.log("Admin2",props)
-    return({
-      loginInfo:loginInfo,
-     leaveList:props.leaveList,
-     pendingCount:pendingCount,
-     aprovedCount:aprovedCount
-    })
-  }
+      return({
+        loginInfo:loginInfo,
+      leaveList:props.leaveList,
+      pendingCount:pendingCount,
+      aprovedCount:aprovedCount
+      })
+    }
   }
 
-  componentDidMount(){
-    console.log("Admin",this.props)
-  }
 
   leaveList=()=>{
-  // return <div>r</div>
   let value =''
-  console.log('this.state.leaveList',this.state.leaveList.leave)
   if(this.state.leaveList.leave.length>0){
  value=this.state.leaveList.leave.map((item,i)=>{
-          
-              // (<div>df</div>)
               if(item.type ==='Request sended'){
-   return (
-     
+        return (
                 <div>
-             <span>
-             <span>
-             <b>
-             {item.userInfo.userName+' '+item.leaveDate+' '+item.type}
-             </b>
-             </span>
-             <span>
-            {item.loginTime}
-             </span>
-             
+                  <span>
+                    <span>
+                      <b>
+                      {item.userInfo.userName+' '+item.leaveDate+' '+item.type}
+                      </b>
+                    </span>
+                  <span>
+                    {item.loginTime}
+                  </span>
             <Button variant="contained" onClick={()=>{
               this.props.acceptLeave(item)
         }}> Leave Accept</Button>
-
         <Button variant="contained" onClick={()=>{
          this.props.deniedLeave(item)
         }}> Leave Denied</Button>
-
              </span>
               </div>)
               }
-
-           
           })
   }else{
-value =  (
-                <div>
-                There are no Request
-                </div>
-              )
-  }
-
-
+      value =  (
+                  <div>
+                  There are no Request
+                  </div>
+                )
+         }
         return value
 }
 
 
 responseRequest=()=>{
    let value =''
-  console.log('this.state.leaveList',this.state.leaveList.leave)
   if(this.state.leaveList.leave.length>0){
  value=this.state.leaveList.leave.map((item,i)=>{
-          
-              // (<div>df</div>)
               if(item.type ==='Leave Denied' || item.type ==='Leave Aproved'){
    return (
-     
-                <div>
-             <span>
-             <span>
-             <b>
-             {item.userInfo.userName+' '+item.leaveDate+' '+item.type+' '+item.loginTime}
-             </b>
-             </span>
-            
-             </span>
-              </div>)
+          <div>
+            <span>
+              <span>
+                <b>
+                {item.userInfo.userName+' '+item.leaveDate+' '+item.type+' '+item.loginTime}
+                </b>
+              </span>
+            </span>
+        </div>)
               }
-
-           
           })
   }else{
-value =  (
-                <div>
-                There are no Request
-                </div>
-              )
-  }
-
-
-        return value
+      value =  (
+                  <div>
+                  There are no Request
+                  </div>
+                )
+        }
+    return value
 }
   render() {
     const classes= this.props
@@ -202,7 +174,6 @@ value =  (
         </div>
         </div>
       )}
-       
       </div>
     );
   }

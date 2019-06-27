@@ -19,12 +19,8 @@ export const ClearHistoryLoginAction=()=>({
 })
 
 export const LoginAction =(content)=>{
-  console.log(adminInfo,userInfo)
-  console.log(content)
   var isValidUser;
-
       if(content.userName === adminInfo.userName && content.userPassword === adminInfo.userPassword){
-      console.log("ok")
       return({type:'HANDLE_LOGIN',payload:{loginType:'Admin',profile:adminInfo}})
     }else{
        isValidUser = userInfo.find((item, i) => {
@@ -38,16 +34,5 @@ export const LoginAction =(content)=>{
       }else{
         return({type:'HANDLE_LOGIN',payload:{loginType:'User',profile:isValidUser}})
       }
-     
     }
-
-  // return dispatch=>{
-
-  // }
 }
-
-
-
-// export const LoginActions =(content)=>{
-//   console.log(content)
-// }

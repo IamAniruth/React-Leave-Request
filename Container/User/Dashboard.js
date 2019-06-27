@@ -43,7 +43,6 @@ class UserDashboard extends Component {
     this.state={
         loginInfo:{
         loginType:'',
-       
         profile:{}
       },
       loginTime:new Date(),
@@ -56,9 +55,7 @@ class UserDashboard extends Component {
   }
 
   static getDerivedStateFromProps(props,state){
-    console.log("kiuhjdvfs",props)
   if(props.loginInfo !== state.loginInfo || props.leaveList !== state.leaveList ){
-  
      let loginInfo ={
        loginType:props.loginInfo.loginType,
        profile:props.loginInfo.profile
@@ -70,50 +67,40 @@ class UserDashboard extends Component {
   }
   }
 
-componentDidMount(){
-  console.log("jkkk",this.state)
-}
 
 leaveList=()=>{
-  // return <div>r</div>
-  let value =''
-  console.log('this.state.leaveList',this.state.leaveList)
+  let value ='';
   if(this.state.leaveList.leave.length>0){
  value=this.state.leaveList.leave.map((item,i)=>{
             if(item.userInfo.id ===this.state.loginInfo.profile.id ){
-              console.log("jhksfd",item.leaveDate)
-              // (<div>df</div>)
    return (
-     
-                <div>
-             <span>
-              <span>
-               {item.leaveDate} 
+          <div>
+            <span>
+                <span>
+                  {item.leaveDate} 
+                </span>
+                <span>
+                  <b>
+                    {item.type}
+                  </b>
               </span>
-             <span>
-             <b>
-             {item.type}
-             </b>
-             </span>
-             </span>
-              </div>)
-            }
-          })
+            </span>
+        </div>)
+      }
+    })
   }else{
 value =  (
-                <div>
-                There are no Request
-                </div>
-              )
+          <div>
+            There are no Request
+          </div>
+          )
   }
 
-
-        return value
+    return value
 }
 
   render() {
     const classes = this.props
-   
     return (
       <div>
       {this.state.loginInfo.loginType===''?(<div>
@@ -126,7 +113,6 @@ value =  (
           <Button variant="contained" onClick={()=>{
           this.props.history.push('/')
         }}>Logout</Button>
-         
        <div className={classes.root}>
       <Grid container spacing={3}>
        <Grid item xs={6}>
@@ -136,24 +122,6 @@ value =  (
           </div>
           <div>
           {this.leaveList()}
-        {
-          // this.state.leaveList.find((item,i)=>{
-          //   if(item.userInfo.id ===this.state.loginInfo.profile.id ){
-          //     console.log("jhksfd",this.state.loginInfo.profile.id)
-          //     (<div>df</div>)
-          //     // return(
-          //     //   <div>
-          //     //   ok
-          //     // </div>)
-          //   }else{
-          //     return(
-          //       <div>
-          //       There are no Request
-          //       </div>
-          //     )
-          //   }
-          // })
-        }
           </div>
           </Paper>
         </Grid>
@@ -185,9 +153,6 @@ value =  (
         </MuiPickersUtilsProvider>
           </div>
           <div>
-         
-           
-         
           </div>
           </Paper>
         </Grid>

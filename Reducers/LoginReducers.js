@@ -2,17 +2,11 @@
   
   switch(action.type){
     case 'HANDLE_USER_NAME':
-    console.log(action)
       return({...state,userName:action.payload})
-
       case 'HANDLE_USER_PASSWORD':
       return({...state,userPassword:action.payload})
-
       case 'HANDLE_CLEAR_FIELD':
-     
       return({state,id:'',userName:'',userPassword:''})
-
-   
     default:
     return {...state}
   }
